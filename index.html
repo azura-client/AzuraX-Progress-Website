@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Azura - Progressboard</title>
+        <link href="css/main.css" rel="stylesheet"/>
+        <style>
+            body {
+            background: #000f26;
+            color: white;
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            }
+            .unscrollable {
+            overflow: hidden;
+            }
+            .video iframe {
+            visibility: hidden;
+            }
+            .video .left {
+            padding-bottom: 40vh;
+            }
+            .link {
+            text-decoration: none;
+            color: skyblue;
+            cursor: pointer;
+            }
+            .link:hover {
+            color: blue;
+            }
+            .email-normal {
+            position: absolute;
+            top: 0;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.7);
+            -webkit-transition: 250ms all ease;
+            transition: 250ms all ease;
+            opacity: 0;
+            z-index: -1;
+            }
+            .email-normal .email-content {
+            -webkit-transition: 250ms all ease;
+            transition: 250ms all ease;
+            margin-top: 15vh;
+            position: relative;
+            width: 21em;
+            height: 19em;
+            background-color: #000f26;
+            border-radius: 30px;
+            text-align: center;
+            }
+            .email-normal .email-content .close {
+            font-size: 48px;
+            position: absolute;
+            right: 16px;
+            -webkit-transform: rotate(45deg);
+            transform: rotate(45deg);
+            cursor: pointer;
+            -webkit-transition: 250ms all ease;
+            transition: 250ms all ease;
+            }
+            .email-normal .email-content .close:hover {
+            color: red;
+            }
+            .email-normal .email-content form {
+            text-align: center;
+            position: relative;
+            display: block;
+            margin-top: 70px;
+            }
+            .email-normal .email-content form input {
+            border: solid 2px white;
+            background: none;
+            color: white;
+            padding: .5em .5em;
+            margin-right: auto;
+            margin-left: auto;
+            border-radius: 10em;
+            margin-top: 10px;
+            width: 70%;
+            }
+            .email-normal .email-content h3 {
+            margin-top: .5em;
+            }
+            .email-normal .email-content p {
+            padding-right: 2em;
+            padding-left: 2em;
+            }
+            .email-normal .email-content .button {
+            position: relative;
+            top: 40px;
+            width: 70%;
+            padding: .5em 5em;
+            border-radius: 10em;
+            color: white;
+            margin-right: auto;
+            margin-left: auto;
+            border: solid 2px white;
+            -webkit-transition: 250ms all ease;
+            transition: 250ms all ease;
+            }
+            .email-normal .email-content .button:hover {
+            background: white;
+            color: black;
+            }
+            .email-normal .email-content h2 {
+            font-size: 20px;
+            position: absolute;
+            left: 20px;
+            }
+            .email-normal .email-content .checkmark__circle {
+            stroke-dasharray: 166;
+            stroke-dashoffset: 166;
+            stroke-width: 2;
+            stroke-miterlimit: 10;
+            stroke: #7ac142;
+            fill: none;
+            -webkit-animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+            animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+            }
+            .email-normal .email-content .checkmark {
+            width: 60px;
+            height: 60px;
+            border-radius: 100%;
+            display: block;
+            stroke-width: 2;
+            stroke: #fff;
+            stroke-miterlimit: 10;
+            margin: 10% auto;
+            margin-top: 4.5em;
+            -webkit-box-shadow: inset 0px 0px 0px #7ac142;
+            box-shadow: inset 0px 0px 0px #7ac142;
+            -webkit-animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
+            animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
+            }
+            .email-normal .email-content .checkmark__check {
+            -webkit-transform-origin: 50% 50%;
+            transform-origin: 50% 50%;
+            stroke-dasharray: 48;
+            stroke-dashoffset: 48;
+            -webkit-animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+            animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+            }
+            @-webkit-keyframes stroke {
+            100% {
+            stroke-dashoffset: 0;
+            }
+            }
+            @keyframes stroke {
+            100% {
+            stroke-dashoffset: 0;
+            }
+            }
+            @-webkit-keyframes scale {
+            0%, 100% {
+            -webkit-transform: none;
+            transform: none;
+            }
+            50% {
+            -webkit-transform: scale3d(1.1, 1.1, 1);
+            transform: scale3d(1.1, 1.1, 1);
+            }
+            }
+            @keyframes scale {
+            0%, 100% {
+            -webkit-transform: none;
+            transform: none;
+            }
+            50% {
+            -webkit-transform: scale3d(1.1, 1.1, 1);
+            transform: scale3d(1.1, 1.1, 1);
+            }
+            }
+            @-webkit-keyframes fill {
+            100% {
+            -webkit-box-shadow: inset 0px 0px 0px 30px #7ac142;
+            box-shadow: inset 0px 0px 0px 30px #7ac142;
+            }
+            }
+            @keyframes fill {
+            100% {
+            -webkit-box-shadow: inset 0px 0px 0px 30px #7ac142;
+            box-shadow: inset 0px 0px 0px 30px #7ac142;
+            }
+            }
+            .email-window {
+            opacity: 1;
+            z-index: 2;
+            }
+            .register-normal {
+            position: absolute;
+            top: 0;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.7);
+            -webkit-transition: 250ms all ease;
+            transition: 250ms all ease;
+            opacity: 0;
+            z-index: -1;
+            }
+            .register-normal .register-content {
+            -webkit-transition: 250ms all ease;
+            transition: 250ms all ease;
+            margin-top: 15vh;
+            position: relative;
+            width: 21em;
+            height: 17em;
+            background-color: #000f26;
+            border-radius: 30px;
+            text-align: center;
+            }
+            .register-normal .register-content .close {
+            font-size: 48px;
+            position: absolute;
+            right: 16px;
+            -webkit-transform: rotate(45deg);
+            transform: rotate(45deg);
+            cursor: pointer;
+            -webkit-transition: 250ms all ease;
+            transition: 250ms all ease;
+            }
+            .register-normal .register-content .close:hover {
+            color: red;
+            }
+            .register-normal .register-content form {
+            text-align: center;
+            position: relative;
+            display: block;
+            margin-top: 70px;
+            }
+            .register-normal .register-content form input {
+            border: solid 2px white;
+            background: none;
+            color: white;
+            padding: .5em .5em;
+            margin-right: auto;
+            margin-left: auto;
+            border-radius: 10em;
+            margin-top: 10px;
+            width: 70%;
+            }
+            .register-normal .register-content .button {
+            position: relative;
+            top: 40px;
+            width: 70%;
+            padding: .5em 5em;
+            border-radius: 10em;
+            color: white;
+            margin-right: auto;
+            margin-left: auto;
+            border: solid 2px white;
+            -webkit-transition: 250ms all ease;
+            transition: 250ms all ease;
+            }
+            .register-normal .register-content .button:hover {
+            background: white;
+            color: black;
+            }
+            .register-normal .register-content h2 {
+            font-size: 20px;
+            position: absolute;
+            left: 20px;
+            }
+            .error {
+            position: absolute;
+            text-align: center;
+            background: red;
+            padding: 1em 2em;
+            border-radius: 2em;
+            z-index: -1;
+            margin-top: 8vh;
+            }
+            .register-window {
+            opacity: 1;
+            z-index: 2;
+            }
+            .login-normal {
+            position: absolute;
+            top: 0;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.7);
+            -webkit-transition: 250ms all ease;
+            transition: 250ms all ease;
+            opacity: 0;
+            z-index: -1;
+            }
+            .login-normal .error-invis {
+            visibility: hidden;
+            }
+            .login-normal .login-content {
+            -webkit-transition: 250ms all ease;
+            transition: 250ms all ease;
+            margin-top: 15vh;
+            position: relative;
+            width: 20em;
+            height: 18em;
+            background-color: #000f26;
+            border-radius: 30px;
+            text-align: center;
+            }
+            .login-normal .login-content .close {
+            font-size: 48px;
+            position: absolute;
+            right: 16px;
+            -webkit-transform: rotate(45deg);
+            transform: rotate(45deg);
+            cursor: pointer;
+            -webkit-transition: 250ms all ease;
+            transition: 250ms all ease;
+            }
+            .login-normal .login-content .close:hover {
+            color: red;
+            }
+            .login-normal .login-content p {
+            font-size: 15px;
+            position: relative;
+            top: 30px;
+            }
+            .login-normal .login-content form {
+            text-align: center;
+            position: relative;
+            display: block;
+            margin-top: 70px;
+            }
+            .login-normal .login-content form input {
+            border: solid 2px white;
+            background: none;
+            color: white;
+            padding: .5em .5em;
+            margin-right: auto;
+            margin-left: auto;
+            border-radius: 10em;
+            margin-top: 10px;
+            width: 70%;
+            }
+            .login-normal .login-content .button {
+            font-size: 15px;
+            position: relative;
+            top: 30px;
+            width: 70%;
+            padding: .5em 5em;
+            border-radius: 10em;
+            color: white;
+            margin-right: auto;
+            margin-left: auto;
+            border: solid 2px white;
+            -webkit-transition: 250ms all ease;
+            transition: 250ms all ease;
+            }
+            .login-normal .login-content .button:hover {
+            background: white;
+            color: black;
+            }
+            .login-normal .login-content h2 {
+            font-size: 20px;
+            position: absolute;
+            left: 20px;
+            }
+            .login-window {
+            opacity: 1;
+            z-index: 2;
+            }
+            .features {
+            text-align: center;
+            }
+            .features h1 {
+            font-size: 40px;
+            }
+            .features ul {
+            display: -ms-grid;
+            display: grid;
+            -ms-grid-columns: (minmax(20em, 1fr))[auto-fit];
+            grid-template-columns: repeat(auto-fit, minmax(20em, 1fr));
+            }
+            .features ul li {
+            background-color: #000f26;
+            -webkit-box-shadow: 5px 5px 5px 5px black;
+            box-shadow: 5px 5px 5px 5px black;
+            width: 70%;
+            -webkit-transition: 250ms all ease;
+            transition: 250ms all ease;
+            margin-bottom: 2em;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 10px;
+            padding: 0em 1em;
+            }
+            .features ul li:hover {
+            -webkit-box-shadow: 5px 5px 10px 10px black;
+            box-shadow: 5px 5px 10px 10px black;
+            }
+            .navbar {
+            background: #001536;
+            padding: 1em;
+            }
+            .navbar .logo {
+            text-decoration: none;
+            font-weight: bold;
+            color: white;
+            font-size: 1.2em;
+            }
+            .navbar nav {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            width: 21em;
+            right: 0;
+            top: 0;
+            background: #011952;
+            height: 100vh;
+            }
+            .navbar nav ul.primary {
+            -webkit-transition: all 250ms ease;
+            transition: all 250ms ease;
+            margin-top: 5em;
+            }
+            .navbar nav li a {
+            -webkit-transition: all 250ms ease;
+            transition: all 250ms ease;
+            display: block;
+            padding: .5em 1em;
+            font-size: 1.3em;
+            text-align: right;
+            }
+            .navbar nav li a:hover {
+            font-weight: bold;
+            }
+            .navbar nav .mobile-menu-exit {
+            -webkit-transition: all 250ms ease;
+            transition: all 250ms ease;
+            float: right;
+            margin: 1em;
+            width: 32px;
+            cursor: pointer;
+            }
+            .navbar .container {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            place-content: space-between;
+            }
+            .navbar .mobile-menu {
+            cursor: pointer;
+            -webkit-transition: 250ms all;
+            transition: 250ms all;
+            }
+            ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            }
+            section {
+            padding: 5em 2em;
+            }
+            .main {
+            text-align: center;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            }
+            .left h1 {
+            font-size: 2.5em;
+            line-height: 1.3em;
+            margin-top: 1em;
+            }
+            .left .primary-main {
+            -webkit-transition: all 250ms ease;
+            transition: all 250ms ease;
+            background: skyblue;
+            color: black;
+            padding: .6em 1.3em;
+            margin-top: .5em;
+            font-size: 1.3em;
+            font-weight: bold;
+            display: inline-block;
+            border-radius: 10em;
+            }
+            .left .primary-main:hover {
+            background-color: #04287d;
+            color: white;
+            }
+            .left .secondary-main {
+            display: block;
+            margin-top: 1em;
+            }
+            .left .secondary-main img {
+            margin-right: 1em;
+            }
+            nav.menu-btn {
+            display: block;
+            }
+            a {
+            color: white;
+            text-decoration: none;
+            }
+            @media only screen and (min-width: 1200px) {
+            .mobile-menu, .mobile-menu-exit {
+            display: none;
+            }
+            .navbar .container {
+            display: -ms-grid;
+            display: grid;
+            -ms-grid-columns: 180px auto;
+            grid-template-columns: 180px auto;
+            }
+            .navbar .logo {
+            margin-top: 0.15em;
+            font-size: 1.5em;
+            }
+            .navbar nav {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: justify;
+            -ms-flex-pack: justify;
+            justify-content: space-between;
+            background: none;
+            position: relative;
+            height: auto;
+            width: 100%;
+            padding: 0;
+            }
+            .navbar nav ul {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            }
+            .navbar nav li {
+            font-size: .8em;
+            padding: 0;
+            }
+            .navbar nav li a:hover {
+            font-weight: normal;
+            color: lightblue;
+            }
+            .navbar nav li .bold-li {
+            font-weight: bold;
+            }
+            .navbar nav li .bold-li:hover {
+            font-weight: bold;
+            }
+            .navbar nav li .apply-link {
+            padding: 0.3em 1em;
+            font-weight: bold;
+            border: 3px solid white;
+            border-radius: 5em;
+            -webkit-transition: all 250ms ease;
+            transition: all 250ms ease;
+            }
+            .navbar nav li .apply-link:hover {
+            background: white;
+            font-weight: bold;
+            color: black;
+            }
+            .navbar nav a {
+            padding: .1em 1em;
+            }
+            .navbar nav ul.primary {
+            margin: 0;
+            }
+            .left .apply-main {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            }
+            .left .apply-main ul {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            margin-left: 2em;
+            }
+            .left .apply-main ul li {
+            margin-right: 1em;
+            padding: 0;
+            }
+            }
+            @media only screen and (min-width: 1400px) {
+            .container {
+            width: 1400px;
+            margin: 0 auto;
+            }
+            .video {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: top;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            overflow: hidden;
+            }
+            .video iframe {
+            visibility: visible;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100vw;
+            height: 56.25vw;
+            -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            border-radius: 8px;
+            pointer-events: none;
+            opacity: 0.3;
+            z-index: -1;
+            }
+            .video .left {
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -ms-grid-column-align: center;
+            justify-self: center;
+            margin-top: 36vh;
+            z-index: 2;
+            }
+            }
+            /*# sourceMappingURL=main.css.map */
+        </style>
+    </head>
+    <body>
+        <div class="navbar">
+            <div class="container">
+                <a class="logo" href="index.html">Azura</a>
+                <img id="mobile-open" class="mobile-menu" th:src="@{images/menu.png}" src="images/menu.png"/>
+                <nav>
+                    <img id="mobile-close" class="mobile-menu-exit" src="images/close.png" alt="Close Navigation Menu"/>
+                    <ul class="primary">
+                        <li><a href="https://azura.best" class="bold-li">Home</a></li>
+                        <li><a href="https://azura.best/documentation">Documentation</a></li>
+                        <li><a href="https://azura.best/login">Login</a></li>
+                        <li><a href="https://azura.best/login">Register</a></li>
+                        <li><a class="apply-link" href="https://docs.google.com/forms/d/e/1FAIpQLSdQeZoGgUqEb_1y-g4xDmNOcOnOJG_ClYc7xJs8L0nViqZmYQ/viewform">Apply</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div class="main">
+            <div class="maincontainer">
+                <div class="video">
+                    <iframe frameborder="0" src="http://www.youtube.com/embed/cGScoPbNjeM?autoplay=1&mute=1&showInfo=0&disablekb=1&controls=0&rel=1&loop=1&playlist=cGScoPbNjeM"> </iframe>
+                    <div class="left">
+                        <h1>Azura - The most advanced free client</h1>
+                        <div class="apply-main">
+                            <ul>
+                                <li>
+                                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdQeZoGgUqEb_1y-g4xDmNOcOnOJG_ClYc7xJs8L0nViqZmYQ/viewform"
+                                        class="primary-main">Apply now</a>
+                                </li>
+                                <li><a href="https://discord.gg/windows" class="primary-main">Join the discord</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="features">
+            <h1 class="features-font">Progressboard</h1>
+            <ul class="features-list">
+                <li>
+                    <h2>Auth System</h2>
+                    <p>Currently in his early stages.</p>
+                </li>
+                <li>
+                    <h2>Data Protection and Migration</h2>
+                    <p>All of our old Userdata has been migrated and mostly protected by our new System.</p>
+                </li>
+                <li>
+                    <h2>Bypasses</h2>
+                    <p>AzuraX bypasses on Hypixel really well and we are still working on more bypasses.</p>
+                </li>
+                <li>
+                    <h2>Integrations</h2>
+                    <p>We are still at the beginning of our Integration System for Discord, Spotify, YouTube and our IRC.</p>
+                </li>
+                <li>
+                    <h2>Applications</h2>
+                    <p>Our new Application System is still unfinished.</p>
+                </li>
+                <li>
+                    <h2></h2>
+                    <p></p>
+                </li>
+                <li>
+                    <h2>Release</h2>
+                    <p>We aren't sure when we release but we think AzuraX will be finished until Christmas</p>
+                </li>
+                <li>
+                    <h2>Beta</h2>
+                    <p>We started given Azura Beta to Users that we can trust.</p>
+                </li>
+                <li>
+                    <h2>Quality of Life Updates and Bypass updates</h2>
+                    <p>Azura X will get atleast monthly Updates and try to provide new Bypasses and Quality of Life features to its Users.</p>
+                </li>
+                <li>
+                    <h2></h2>
+                    <p></p>
+                </li>
+            </ul>
+        </div>
+        <div class="footer">
+            <h3 style="text-align: center;">Made by Unbreathable and Presti</h3>
+        </div>
+        <script>
+            const loginBtn = document.getElementById('login-opener');
+            const registerBtn = document.getElementById('register-opener');
+            const loginCloseBtn = document.getElementById('login-close');
+            const emailCloseBtn = document.getElementById('email-close');
+            const registerCloseBtn = document.getElementById('register-close');
+            const mobileBtn = document.getElementById('mobile-open');
+            const accountBtn = document.getElementById('no-account');
+            const loginWindow = document.getElementById('login');
+            const emailWindow = document.getElementById('email');
+            const registerWindow = document.getElementById('register');
+            const nav = document.querySelector('nav');
+            const mobileBtnExit = document.getElementById('mobile-close');
+
+            mobileBtn.addEventListener('click', () => {
+                nav.classList.add('menu-btn');
+                document.querySelector('body').classList.add('unscrollable');
+            });
+
+            loginBtn.addEventListener('click', () => {
+                registerWindow.classList.remove('register-window');
+                loginWindow.classList.add('login-window');
+                nav.classList.remove('menu-btn');
+                document.querySelector('body').classList.add('unscrollable');
+            });
+
+            registerBtn.addEventListener('click', () => {
+                registerWindow.classList.add('register-window');
+                loginWindow.classList.remove('login-window');
+                nav.classList.remove('menu-btn');
+                document.querySelector('body').classList.add('unscrollable');
+            });
+
+            mobileBtnExit.addEventListener('click', () => {
+                nav.classList.remove('menu-btn');
+                document.querySelector('body').classList.remove('unscrollable');
+            });
+
+            loginCloseBtn.addEventListener('click', () => {
+                loginWindow.classList.remove('login-window');
+                document.querySelector('body').classList.remove('unscrollable');
+            });
+
+            registerCloseBtn.addEventListener('click', () => {
+                registerWindow.classList.remove('register-window');
+                document.querySelector('body').classList.remove('unscrollable');
+            });
+
+            accountBtn.addEventListener('click', () => {
+                registerWindow.classList.add('register-window');
+                loginWindow.classList.remove('login-window');
+                nav.classList.remove('menu-btn');
+            });
+
+            emailCloseBtn.addEventListener('click', () => {
+                emailWindow.classList.remove('email-window');
+                document.querySelector('body').classList.remove('unscrollable');
+            });
+
+        </script>
+    </body>
+</html>
