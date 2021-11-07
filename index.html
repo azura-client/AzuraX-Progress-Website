@@ -732,16 +732,7 @@
             <h3 style="text-align: center;">Made by Unbreathable and Presti</h3>
         </div>
         <script>
-            const loginBtn = document.getElementById('login-opener');
-            const registerBtn = document.getElementById('register-opener');
-            const loginCloseBtn = document.getElementById('login-close');
-            const emailCloseBtn = document.getElementById('email-close');
-            const registerCloseBtn = document.getElementById('register-close');
             const mobileBtn = document.getElementById('mobile-open');
-            const accountBtn = document.getElementById('no-account');
-            const loginWindow = document.getElementById('login');
-            const emailWindow = document.getElementById('email');
-            const registerWindow = document.getElementById('register');
             const nav = document.querySelector('nav');
             const mobileBtnExit = document.getElementById('mobile-close');
 
@@ -750,43 +741,8 @@
                 document.querySelector('body').classList.add('unscrollable');
             });
 
-            loginBtn.addEventListener('click', () => {
-                registerWindow.classList.remove('register-window');
-                loginWindow.classList.add('login-window');
-                nav.classList.remove('menu-btn');
-                document.querySelector('body').classList.add('unscrollable');
-            });
-
-            registerBtn.addEventListener('click', () => {
-                registerWindow.classList.add('register-window');
-                loginWindow.classList.remove('login-window');
-                nav.classList.remove('menu-btn');
-                document.querySelector('body').classList.add('unscrollable');
-            });
-
             mobileBtnExit.addEventListener('click', () => {
                 nav.classList.remove('menu-btn');
-                document.querySelector('body').classList.remove('unscrollable');
-            });
-
-            loginCloseBtn.addEventListener('click', () => {
-                loginWindow.classList.remove('login-window');
-                document.querySelector('body').classList.remove('unscrollable');
-            });
-
-            registerCloseBtn.addEventListener('click', () => {
-                registerWindow.classList.remove('register-window');
-                document.querySelector('body').classList.remove('unscrollable');
-            });
-
-            accountBtn.addEventListener('click', () => {
-                registerWindow.classList.add('register-window');
-                loginWindow.classList.remove('login-window');
-                nav.classList.remove('menu-btn');
-            });
-
-            emailCloseBtn.addEventListener('click', () => {
-                emailWindow.classList.remove('email-window');
                 document.querySelector('body').classList.remove('unscrollable');
             });
 
